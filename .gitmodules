@@ -1,0 +1,12 @@
+[submodule "thirdparty/lapack"]
+	path = thirdparty/lapack
+	url = https://github.com/Reference-LAPACK/lapack.git
+[submodule "thirdparty/OpenBLAS"]
+	path = thirdparty/OpenBLAS
+	url = https://github.com/xianyi/OpenBLAS.git
+[submodule "thirdparty/NumCpp"]
+	path = thirdparty/NumCpp
+	url = https://github.com/dpilger26/NumCpp.git
+[submodule "thirdparty/SciCpp"]
+	path = thirdparty/SciCpp
+	url = https://github.com/tvanderbruggen/SciCpp.git
