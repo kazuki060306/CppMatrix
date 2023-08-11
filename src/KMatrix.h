@@ -144,7 +144,7 @@ public:
 		// 1次元のみ対応
 		if (this->m_Rows != 1 && this->m_Cols != 1)
 		{
-			throw std::runtime_error("KMatrix::diag error : data is not 1 demension.");
+			throw std::runtime_error("KMatrix::amin error : data is not 1 demension.");
 		}
 
 		arraytype minval = this->m_Data[0];
@@ -166,7 +166,7 @@ public:
 		// 1次元のみ対応
 		if (this->m_Rows != 1 && this->m_Cols != 1)
 		{
-			throw std::runtime_error("KMatrix::diag error : data is not 1 demension.");
+			throw std::runtime_error("KMatrix::argmax error : data is not 1 demension.");
 		}
 		arraytype maxval = this->m_Data[0];
 		unsigned int maxelement = 0;
@@ -188,7 +188,7 @@ public:
 		// 1次元のみ対応
 		if (this->m_Rows != 1 && this->m_Cols != 1)
 		{
-			throw std::runtime_error("KMatrix::diag error : data is not 1 demension.");
+			throw std::runtime_error("KMatrix::argmin error : data is not 1 demension.");
 		}
 
 		arraytype minval = this->m_Data[0];
@@ -345,7 +345,7 @@ public:
 		// 1次元のみ対応
 		if (this->m_Rows != 1 && this->m_Cols != 1)
 		{
-			throw std::runtime_error("KMatrix::diag error : data is not 1 demension.");
+			throw std::runtime_error("KMatrix::mean error : data is not 1 demension.");
 		}
 
 		arraytype meanval = 0;
@@ -355,6 +355,71 @@ public:
 		}
 
 		return meanval /= this->m_Size;
+	}
+
+	/*
+	 * 行列のexponentialを取得
+	 */
+	KMatrix<double>& exp() const
+	{
+		KMatrix<double> expmat(this->m_Rows, this->m_Cols);
+		for (unsigned int i = 0; i < this->m_Rows; ++i)
+		{
+			for (unsigned int j = 0; j < this->m_Cols; ++j)
+			{
+				expmat(i, j) = std::exp(static_cast<double>(operator()(i, j)));
+			}
+		}
+
+		return expmat;
+	}
+
+	/*
+	 * 行列のexponentialを取得
+	 */
+	KMatrix<arraytype>& power(const KMatrix<arraytype>& b) const
+	{
+		KMatrix<arraytype> powmat(this->m_Rows, this->m_Cols);
+		for (unsigned int i = 0; i < this->m_Size; ++i)
+		{
+			powmat.m_Data[i] = std::pow(this->m_Data[i], b.m_Data[i]);
+		}
+
+		return powmat;
+	}
+
+	/*
+	 * 行列の反転を取得
+	 */
+	KMatrix<arraytype>& flip() const
+	{
+		KMatrix<arraytype> flipmat(this->m_Rows, this->m_Cols);
+		for (unsigned int i = 0; i < this->m_Size; ++i)
+		{
+			flipmat.m_Data[flipmat.m_Size - i - 1] = this->m_Data[i];
+		}
+
+		return flipmat;
+	}
+
+	/*
+	 * 行or列の反転を取得
+	 */
+	KMatrix<arraytype>& reverse() const
+	{
+		// 1次元のみ対応
+		if (this->m_Rows != 1 && this->m_Cols != 1)
+		{
+			throw std::runtime_error("KMatrix::reverse error : data is not 1 demension.");
+		}
+
+		KMatrix<arraytype> reversemat(this->m_Rows, this->m_Cols);
+		for (unsigned int i = 0; i < this->m_Size; ++i)
+		{
+			reversemat.m_Data[reversemat.m_Size - i - 1] = this->m_Data[i];
+		}
+
+		return reversemat;
 	}
 
 	/*
